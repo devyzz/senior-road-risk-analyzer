@@ -27,8 +27,11 @@ senior-road-risk-analyzer/
 ├── 📁notebooks/                 # 분석 및 실험용 Jupyter 노트북
 │   ├── example.ipynb              
 │
-├── 📁scripts/                   # 실행용 파이썬 스크립트
-│   ├── taas_accident_api.py     # TAAS GIS분석 페이지 데이터 수집 크롤링 스크립트
+├── 📁scripts/                    # 실행용 Python 스크립트
+│   ├── 00_fetch_taas_accident_data.py     # TAAS 사고 데이터 크롤링
+│   ├── 00_fetch_protection_zones.py       # 보호구역 OpenAPI 수집
+│   ├── 01_merge_road_features.py          # 도로속도 정보 병합
+│   └── 01_merge_protection_zone.py        # 보호구역 정보 병합
 │
 ├── 📁webapi/                    # FastAPI 서버 코드
 │   ├── main.py

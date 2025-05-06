@@ -1,0 +1,21 @@
+name: 👾 버그 보고
+description: 개발 중 발견한 버그나 오류를 보고해주세요.
+title: "[BUG] 문제 설명"
+labels: ["bug"]
+projects: ["devyzz/senior-road-risk-analyzer/4"]
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 👾 문제 설명
+      description: 문제가 무엇인지 상세히 작성해주세요.
+      placeholder: 예) 실행 중 속도 컬럼이 NaN으로 변환됩니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 👾 오류 로그
+      description: Traceback 또는 에러 메시지가 있다면 붙여넣어주세요.

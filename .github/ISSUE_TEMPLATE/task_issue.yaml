@@ -1,0 +1,37 @@
+name: 🎯 작업 이슈
+description: 할 일을 정의하고 팀원에게 할당하세요.
+title: "[TASK] 작업 제목"
+labels: ["task"]
+projects: ["devyzz/senior-road-risk-analyzer/4"]  
+
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: 🎯 작업 목표
+      placeholder: 예) 서울시 보호구역 API 연동 기능 구현
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: output
+    attributes:
+      label: 🎯 예상 산출물
+      description: 작업 결과로 어떤 산출물이 나와야 하나요?
+      options:
+        - label: Python scripts
+        - label: Jupyter Notebook
+        - label: CSV/데이터 결과물
+        - label: 정리 문서 or README
+
+  - type: input
+    id: deadline
+    attributes:
+      label: 🎯 마감 기한
+      placeholder: yyyy-mm-dd (선택)
+
+  - type: input
+    id: related
+    attributes:
+      label: 🎯 관련 이슈/PR
+      placeholder: 예) #12, #15

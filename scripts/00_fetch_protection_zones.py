@@ -7,26 +7,27 @@
 # - 필요: API Key 및 IP 등록
 # ──────────────────────────────────────────────────────────────
 from dotenv import load_dotenv
+import certifi
 import requests
 import pandas as pd
 import os
 
 # 보호구역 종류 매핑
 ZONE_TYPE = {
-    "1": "어린이ㅇㅇ",
+    "1": "어린이",
     "2": "노인",
     "3": "장애인"
 }
 
 # 시도코드 단위 보호구역 데이터를 요청하여 리스트 반환
 def fetch_protection_zone(api_key, sido_code) -> list:
-    url = "https://www.utic.go.kr/guide/protZoneData.do"
+    url = "http://www.utic.go.kr/guide/getSafeOpenJson.do"
     params = {
         "key": api_key,
         "type": "json",
         "sidoCd": sido_code,
     }
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, verify=certifi.where())
 
     if response.status_code == 200:
         data = response.json()
@@ -69,5 +70,6 @@ def save_protection_zone_csv(api_key: str, output_path: str):
 if __name__ == "__main__":
     load_dotenv()
     API_KEY = os.getenv("UTIC_API_KEY")
+    print(f"Key 정보 확인 ==>{API_KEY}")
     OUTPUT_PATH = "./data/external/protection_zone_data.csv"
     save_protection_zone_csv(API_KEY, OUTPUT_PATH)

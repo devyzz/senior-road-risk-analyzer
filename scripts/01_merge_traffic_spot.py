@@ -20,7 +20,7 @@ def clean_expressway(filepath: str) -> pd.DataFrame:
 
 def load_common(filepath: str) -> pd.DataFrame:
     df = pd.read_csv(filepath)
-    df = df.iloc[:, 1:] 
+    df = df.iloc[:, 1:] #### 주석추가!!!!
     return df
 
 def merge_traffic_data(file_map: dict, spot_path: str) -> pd.DataFrame:
@@ -95,7 +95,6 @@ def main():
     spot_path = "./data/external/seoul_traffic_spots.csv"
 
     traffic_df = merge_traffic_data(file_map, spot_path)
-    traffic_df.to_csv("./data/raw/merged_traffic.csv", index=False, encoding="utf-8-sig")
 
     for year in [2021, 2022, 2023]:
         accident_path = f"./data/raw/all_accident_info_{year}.csv"

@@ -65,7 +65,7 @@ if __name__ == "__main__":
         
         accident_path = f"./data/raw/all_accident_info_{year}.csv"
         velocity_path = f"./data/raw/{year}velocity.csv"  # 속도 데이터는 동일 사용
-        output_path = f"./data/processed/{year}_accident_data.csv"
+        output_path = f"./data/processed/accident_data_with_roadfeature_{year}.csv"
 
         merge_accident_with_velocity(
             accident_path=accident_path,

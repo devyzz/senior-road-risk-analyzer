@@ -8,9 +8,10 @@
 # - 작성자 : 이주안
 # - 작성일 : 2025.05.07
 # - 수정자 : 이주안
-# - 수정일 : 2025.05.07
+# - 수정일 : 2025.05.08
 # - 수정내용 : 
 #   - 자치구별 신호등 개수 집계 및 시각화
+#   - 시각화 코드 제거 및 파일 저장 로직 생성
 # ──────────────────────────────────────────────────────────────
 
 import pandas as pd
@@ -23,7 +24,7 @@ plt.rcParams['font.family'] = 'AppleGothic'
 plt.rcParams['axes.unicode_minus'] = False
 
 # 파일 경로 및 데이터 로드
-file_path = "/Users/leejuan/Desktop/교통국토경진대회/02. data/서울특별시_보행등 위도 경도 현황_20220919.csv"
+file_path = "./data/raw/서울특별시_보행등 위도 경도 현황_20220919.csv"
 df_signal = pd.read_csv(file_path, encoding='euc-kr')
 
 # 데이터 확인용 출력

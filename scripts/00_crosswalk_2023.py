@@ -11,7 +11,7 @@
 # - 수정일 : 2025.05.08
 # - 수정내용 :  
 #   - 자치구별 신호등 개수 집계 및 시각화
-#   - 시각화 코드 제거, x,y 좌표 변환 추가
+#   - 시각화 코드 제거, x,y 좌표 변환 추가, 파일 저장 로직 생성 
 # ──────────────────────────────────────────────────────────────
 
 import pandas as pd
@@ -24,9 +24,8 @@ import time
 # 한글 폰트 설정 (예: Apple 기본 폰트 사용)
 plt.rcParams['font.family'] = 'AppleGothic'
 plt.rcParams['axes.unicode_minus'] = False
-
 # 파일 경로 및 데이터 로드, 헤더는 3번째 줄 (index 2)
-file_path = "/Users/leejuan/Desktop/교통국토경진대회/02. data/서울특별시_자치구별 신호등 및 횡단보도 위치 및 현황_20230530.xlsx"
+file_path = "./data/raw/서울특별시_자치구별 신호등 및 횡단보도 위치 및 현황_20230530.xlsx"
 df_signal = pd.read_excel(file_path, engine='openpyxl', header=2)
 # 첫번째 열(A열)이 의미 없는 빈 열인 경우 삭제
 if df_signal.columns[0].startswith('Unnamed'):
@@ -60,38 +59,19 @@ print(df_signal[['X좌표', 'Y좌표']].describe())
 # 유효한 좌표에 대해서만 변환
 mask = df_signal['X좌표'].notna() & df_signal['Y좌표'].notna()
 print(f"🧮 유효 좌표 수: {mask.sum()} / {len(df_signal)}")
-df_signal.loc[mask, ['위도', '경도']] = df_signal.loc[mask].apply(
+df_signal.loc[mask, ['경도', '위도']] = df_signal.loc[mask].apply(
     lambda row: pd.Series(transformer.transform(row['X좌표'], row['Y좌표'])),
     axis=1
 )
 
 # 최종 출력용 데이터 정리
-df_signal = df_signal[['순번', '자치구', '횡단보도종류', '경도', '위도', '주소']]
-df_signal.rename(columns={'순번': '연번', '횡단보도종류': '신호등종류'}, inplace=True)
-df_signal.rename(columns={'경도': 'X좌표', '위도': 'Y좌표'}, inplace=True)
+df_signal = df_signal[['순번', '자치구', 'X좌표', 'Y좌표', '주소']]
 
 # 데이터 확인 출력
 print(df_signal.head())
 print(df_signal.columns) 
 print(df_signal.info())
 
-
-# 지도 중심 좌표 (서울시청 기준)
-print("🗺️ 지도 생성 중...")
-time.sleep(3)
-m = folium.Map(location=[37.5665, 126.9780], zoom_start=11)
-# 신호등 위치 마커 추가
-valid_rows = df_signal[df_signal['Y좌표'].notna() & df_signal['X좌표'].notna()]
-print(f"✅ 시각화 가능한 신호등 수: {len(valid_rows)}개")
-for _, row in valid_rows.iterrows():
-    folium.CircleMarker(
-        location=[row['Y좌표'], row['X좌표']],
-        radius=1,
-        color='red',
-        fill=True,
-        fill_opacity=0.7
-    ).add_to(m)
-# 지도 저장
-m.save("signal_map_seoul.html")
-print("✅ 지도 저장 완료: signal_map_seoul.html")
-time.sleep(1)
+output_path = "./data/processed/crosswalk_2023_cleaned.csv"
+df_signal.to_csv(output_path, index=False)
+print(f"📄 CSV 저장 완료: {output_path}")

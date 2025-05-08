@@ -66,8 +66,8 @@ def process_accident_year(year):
     
     # 파일 경로 설정
     zone_path = "./data/external/protection_zone_data.csv"
-    accident_path = f"./data/processed/{year}_accident_data.csv"
-    output_path = f"./data/processed/{year}_accident_with_zones.csv"
+    accident_path = f"./data/raw/all_accident_info_{year}.csv"
+    output_path = f"./data/processed/accident_data_with_protectzones_{year}.csv"
 
     # 데이터 로드
     accident_df = pd.read_csv(accident_path)

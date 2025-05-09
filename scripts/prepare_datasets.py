@@ -142,6 +142,15 @@ def run_all_processing_steps(year, traffic_df):
     output_path = f"./data/processed/accident_data_{year}.csv"
     accident_df.to_csv(output_path, index=False, encoding="utf-8-sig")
     print(f"====> 최종 저장 완료: {output_path}\n")
+    
+def merge_all_years():
+    print("===> 연도별 CSV 전체 병합 중...")
+    base_dir = "./data/processed"
+    file_names = [f"accident_data_{y}.csv" for y in range(2021, 2024)]
+    dfs = [pd.read_csv(os.path.join(base_dir, f)) for f in file_names]
+    merged_df = pd.concat(dfs, ignore_index=True)
+    merged_df.to_csv(os.path.join(base_dir, "accident_data_all.csv"), index=False, encoding="utf-8-sig")
+    print("====> 병합 완료: accident_data.csv")    
 
 if __name__ == "__main__":
     
@@ -157,3 +166,6 @@ if __name__ == "__main__":
     
     for year in [2021, 2022, 2023]:
         run_all_processing_steps(year, traffic_df)
+    
+    merge_all_years()
+

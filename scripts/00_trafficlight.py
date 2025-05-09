@@ -24,6 +24,12 @@ from pyproj import Transformer
 import time
 import folium
 
+def convert_coordinates(row, transformer):
+    try:
+        lng, lat = transformer.transform(row["X좌표"], row["Y좌표"])
+        return pd.Series({"위도": lat, "경도": lng})
+    except:
+        return pd.Series({"위도": None, "경도": None})
 
 # 한글 폰트 설정 (예: Apple 기본 폰트 사용)
 plt.rcParams['font.family'] = 'AppleGothic'
@@ -36,7 +42,18 @@ df = pd.read_csv(file_path, encoding='euc-kr')
 df = df[["부착대관리번호","신호등종류", "X좌표", "Y좌표"]]
 df = df[df["신호등종류"].isin([2.0, 4.0, 5.0, 6.0, 21.0])]
 df = df.drop_duplicates(subset=["X좌표", "Y좌표"])
-print(df.head())
-output_path="./data/processed/trafficlight_2023.csv"
+
+# 좌표 컬럼을 숫자형으로 먼저 변환 (변환 불가한 값은 NaN 처리)
+df['X좌표'] = pd.to_numeric(df['X좌표'], errors='coerce')
+df['Y좌표'] = pd.to_numeric(df['Y좌표'], errors='coerce')
+transformer = Transformer.from_crs("EPSG:5186", "EPSG:4326", always_xy=True)
+mask = df['X좌표'].notna() & df['Y좌표'].notna()
+
+df.loc[mask, ['위도', '경도']] = df.loc[mask].apply(
+    lambda row: convert_coordinates(row, transformer),
+    axis=1
+)
+
+output_path="./data/external/trafficlight_2023.csv"
 df.to_csv(output_path, index=False)
 print(f"CSV 저장 완료: {output_path}")

@@ -43,21 +43,29 @@ def cluster_and_mark(df, lat_col='lat', lng_col='lng', eps_m=100, min_samples=5)
 
 # 고령/비고령 운전자 분석 및 컬럼 추가
 def assign_hotspot_columns(df_all, lat_col='lat', lon_col='lng', id_col='acdnt_no'):
-    # 고령운전자
+    # 고령 운전자 기준: 100m, 5건 이상
     elderly = df_all[df_all['acdnt_age_1_code'] >= 65].copy()
-    elderly = cluster_and_mark(elderly, lat_col, lon_col)
+    elderly = cluster_and_mark(elderly, lat_col, lon_col, eps_m=100, min_samples=5)
     elderly = elderly[[id_col, 'is_hotspot', 'hotspot_center_lat', 'hotspot_center_lng']]
     elderly.columns = [id_col, 'elderly_hotspot', 'elderly_hotspot_lat', 'elderly_hotspot_lng']
 
-    # 비고령운전자
+    # 비고령 운전자 기준: 100m, 7건 이상
     non_elderly = df_all[df_all['acdnt_age_1_code'] < 65].copy()
-    non_elderly = cluster_and_mark(non_elderly, lat_col, lon_col)
+    non_elderly = cluster_and_mark(non_elderly, lat_col, lon_col, eps_m=100, min_samples=7)
     non_elderly = non_elderly[[id_col, 'is_hotspot', 'hotspot_center_lat', 'hotspot_center_lng']]
     non_elderly.columns = [id_col, 'non_elderly_hotspot', 'non_elderly_hotspot_lat', 'non_elderly_hotspot_lng']
+
+    # 전체 운전자 기준: 50m, 5건 이상
+    all_drivers = df_all.copy()
+    all_drivers = cluster_and_mark(all_drivers, lat_col, lon_col, eps_m=50, min_samples=5)
+    all_drivers = all_drivers[[id_col, 'is_hotspot', 'hotspot_center_lat', 'hotspot_center_lng']]
+    all_drivers.columns = [id_col, 'all_hotspot', 'all_hotspot_lat', 'all_hotspot_lng']
 
     # 병합
     df_result = df_all.merge(elderly, on=id_col, how='left')
     df_result = df_result.merge(non_elderly, on=id_col, how='left')
+    df_result = df_result.merge(all_drivers, on=id_col, how='left')
+
     return df_result
 
 # 연도별 분할 저장

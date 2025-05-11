@@ -19,3 +19,10 @@ if __name__ == "__main__":
 
     for script in script_paths:
         run_script(script)
+print("현재 zone_df 컬럼 목록:", zone_df.columns.tolist())
+if "구분" in zone_df.columns:
+    sub_df = zone_df[zone_df["구분"] == zone_type]
+else:
+    print(f"❌ '구분' 컬럼이 없습니다. zone_type: {zone_type}")
+    sub_df = pd.DataFrame()
+    

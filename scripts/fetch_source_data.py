@@ -159,11 +159,18 @@ def process_traffic_spots():
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df[["지점번호", "지점명", "lat", "lng"]].to_csv(output_path, index=False, encoding="utf-8-sig")
     print(f"===> 교통량 지점 CSV 저장 완료: {output_path}")
-
     
+def merge_traffic_data() -> pd.DataFrame:
+    traffic_df = pd.read_csv("./data/raw/traffic_spot_info.csv")
+    spot_df = pd.read_csv("./data/external/traffic_spot_data.csv").drop(columns=["지점명"], errors="ignore")
+    traffic_df = pd.concat([traffic_df.reset_index(drop=True), spot_df.reset_index(drop=True)], axis=1)
+    traffic_df.to_csv("./data/raw/traffic_mereg_data.csv", index=False, encoding="utf-8-sig")
+    print("✅ 최종 병합 저장 완료: ./data/raw/traffic_merge_data.csv")
+
 
 if __name__ == "__main__":
-    process_crosswalk()
-    process_traffic_light()
-    process_protection_zone()
+    # process_crosswalk()
+    # process_traffic_light()
+    # process_protection_zone()
     process_traffic_spots()
+    merge_traffic_data()

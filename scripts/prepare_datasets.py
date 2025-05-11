@@ -129,8 +129,14 @@ def merge_all_years():
     
     # ⚠️ DtypeWarning 방지: low_memory=False 옵션 추가
     dfs = [pd.read_csv(os.path.join(base_dir, f), low_memory=False) for f in file_names]
-
     merged_df = pd.concat(dfs, ignore_index=True)
+    
+    before_rows = len(merged_df)
+    remove_targets = ["자전거", "개인형이동수단(PM)"]
+    merged_df = merged_df[~merged_df["wrngdo_vhcle_asort_dc"].isin(remove_targets)]
+    after_rows = len(merged_df)
+    print(f"🚲 '자전거' 운전자 행 제거됨: {before_rows - after_rows}건")
+    
     merged_df.to_csv(os.path.join(base_dir, "accident_data_all.csv"), index=False, encoding="utf-8-sig")
     print("====> 병합 완료: accident_data_all.csv")    
     
@@ -149,7 +155,7 @@ def filter_all_data():
     # 필요한 컬럼만 선택
     columns_to_keep = [
         "acdnt_year", "occrrnc_time_code", "legaldong_name", "acdnt_hdc",
-        "lrg_violt_1_dc", "road_stle_dc", "wrngdo_vhcle_asort_dc", "acdnt_age_1_code",
+        "lrg_violt_1_dc", "road_stle_dc", "wrngdo_vhcle_asort_dc", "acdnt_age_1_code", #"acdnt_age_1_dc",
         "rdse_sttus_dc", "road_div", "lat", "lng",
         "near_crosswalk", "near_traffic_light", "near_child_zone",
         "near_elderly_zone", "near_disabled_zone",

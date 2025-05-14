@@ -54,7 +54,7 @@ def run_all_processing_steps(year):
         accident_df, crosswalk_df,
         zone_lat_col="위도", zone_lng_col="경도",
         output_col="near_crosswalk",
-        radius_m=10, buffer_m=10
+        radius_m=15, buffer_m=10
     )
 
     # 2. 신호등 존재유무 컬럼병합
@@ -63,7 +63,7 @@ def run_all_processing_steps(year):
         accident_df, light_df,
         zone_lat_col="위도", zone_lng_col="경도",
         output_col="near_traffic_light",
-        radius_m=10, buffer_m=10
+        radius_m=50, buffer_m=25
     )
 
     # 2. 보호구역 존재유무 컬럼 병합

@@ -46,14 +46,25 @@ def process_traffic_light():
     df = pd.read_csv(file_path, encoding="euc-kr")
 
     df = df[["부착대관리번호", "신호등종류", "X좌표", "Y좌표"]]
-    df = df[df["신호등종류"].isin([2.0, 4.0, 5.0, 6.0, 21.0])]
+    df = df[df["신호등종류"].isin([2.0, 3.0, 4.0, 5.0, 6.0, 21.0])]
     df = df.drop_duplicates(subset=["X좌표", "Y좌표"])
     df["X좌표"] = pd.to_numeric(df["X좌표"], errors="coerce")
     df["Y좌표"] = pd.to_numeric(df["Y좌표"], errors="coerce")
+    
 
     df[["위도", "경도"]] = GU.convert_coordinates(df, "X좌표", "Y좌표", "위도", "경도")
+    
+    def classify_signal(x):
+        if x in [2.0, 5.0]:
+            return "3색등"
+        elif x in [3.0, 6.0]:
+            return "4색등"
+        elif x in [4.0, 21.0]:
+            return "2행등"
+        else:
+            return "기타"
 
-    df["구분"] = "신호등"
+    df["구분"] = df["신호등종류"].apply(classify_signal)    # 기타는 예외 처리용
     df = df[["구분", "위도", "경도"]]
     
     output_path = "./data/external/traffic_light_data.csv"
@@ -170,7 +181,7 @@ def merge_traffic_data() -> pd.DataFrame:
 
 if __name__ == "__main__":
     # process_crosswalk()
-    # process_traffic_light()
+    process_traffic_light()
     # process_protection_zone()
-    process_traffic_spots()
-    merge_traffic_data()
+    # process_traffic_spots()
+    # merge_traffic_data()

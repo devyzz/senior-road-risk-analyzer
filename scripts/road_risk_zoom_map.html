@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c67f56aea1d9b220783c58cb0e415c5f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_c67f56aea1d9b220783c58cb0e415c5f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c67f56aea1d9b220783c58cb0e415c5f = L.map(
+                "map_c67f56aea1d9b220783c58cb0e415c5f",
+                {
+                    center: [37.51, 127.015],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8fea462840acd9c9805907fdb17e453b = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8fea462840acd9c9805907fdb17e453b.addTo(map_c67f56aea1d9b220783c58cb0e415c5f);
+        
+    
+            var circle_0_d95f4ea653e0146c3834ff81c1346311 = L.circleMarker(
+                [37.5, 127.0],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_c67f56aea1d9b220783c58cb0e415c5f);
+        
+    
+        var popup_40e1c6ef7976f2f35aa85345ede9a6f4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_37866d5ea393c574a63249c6385c0ba9 = $(`<div id="html_37866d5ea393c574a63249c6385c0ba9" style="width: 100.0%; height: 100.0%;">교차로/신호등 다수</div>`)[0];
+                popup_40e1c6ef7976f2f35aa85345ede9a6f4.setContent(html_37866d5ea393c574a63249c6385c0ba9);
+            
+        
+
+        circle_0_d95f4ea653e0146c3834ff81c1346311.bindPopup(popup_40e1c6ef7976f2f35aa85345ede9a6f4)
+        ;
+
+        
+    
+    
+            var circle_1_7aeee88f345b9ba5448237cc814bc767 = L.circleMarker(
+                [37.51, 127.01],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_c67f56aea1d9b220783c58cb0e415c5f);
+        
+    
+        var popup_cda1ccba6cf97298638194037b06e944 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_70acae385bef94321f11f8c12ce8ed0b = $(`<div id="html_70acae385bef94321f11f8c12ce8ed0b" style="width: 100.0%; height: 100.0%;">차로 수 많음</div>`)[0];
+                popup_cda1ccba6cf97298638194037b06e944.setContent(html_70acae385bef94321f11f8c12ce8ed0b);
+            
+        
+
+        circle_1_7aeee88f345b9ba5448237cc814bc767.bindPopup(popup_cda1ccba6cf97298638194037b06e944)
+        ;
+
+        
+    
+    
+            var circle_2_0b295fa5d1aa1aad553f154d41ac0388 = L.circleMarker(
+                [37.52, 127.02],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_c67f56aea1d9b220783c58cb0e415c5f);
+        
+    
+        var popup_202b8bdb3faae20686c7e6c635c1a944 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9e60f8986a70169e29843f461fae87d8 = $(`<div id="html_9e60f8986a70169e29843f461fae87d8" style="width: 100.0%; height: 100.0%;">평균속도 낮음</div>`)[0];
+                popup_202b8bdb3faae20686c7e6c635c1a944.setContent(html_9e60f8986a70169e29843f461fae87d8);
+            
+        
+
+        circle_2_0b295fa5d1aa1aad553f154d41ac0388.bindPopup(popup_202b8bdb3faae20686c7e6c635c1a944)
+        ;
+
+        
+    
+    
+            var circle_3_9c49368bcd1d10c7b96dd3cfad68d68e = L.circleMarker(
+                [37.53, 127.03],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_c67f56aea1d9b220783c58cb0e415c5f);
+        
+    
+        var popup_210a5c96ae167e5fda063b09a488a119 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d831f5f1cc7d155358195a201b33844 = $(`<div id="html_2d831f5f1cc7d155358195a201b33844" style="width: 100.0%; height: 100.0%;">단일로</div>`)[0];
+                popup_210a5c96ae167e5fda063b09a488a119.setContent(html_2d831f5f1cc7d155358195a201b33844);
+            
+        
+
+        circle_3_9c49368bcd1d10c7b96dd3cfad68d68e.bindPopup(popup_210a5c96ae167e5fda063b09a488a119)
+        ;
+
+        
+    
+    
+        <script>var circles = {};</script><script>
+    circles["circle_0"] = circle_0;
+    circles["circle_0"].options.baseRadius = circles["circle_0"].getRadius();
+    
+    circles["circle_1"] = circle_1;
+    circles["circle_1"].options.baseRadius = circles["circle_1"].getRadius();
+    
+    circles["circle_2"] = circle_2;
+    circles["circle_2"].options.baseRadius = circles["circle_2"].getRadius();
+    
+    circles["circle_3"] = circle_3;
+    circles["circle_3"].options.baseRadius = circles["circle_3"].getRadius();
+    </script>
+<script>
+    function updateCircleSizes() {
+        
+        var circle_0 = circles['circle_0'];
+        if (circle_0) {
+            var newRadius = circle_0.options.baseRadius * (map.getZoom() / 12);
+            circle_0.setRadius(newRadius);
+        }
+    
+        var circle_1 = circles['circle_1'];
+        if (circle_1) {
+            var newRadius = circle_1.options.baseRadius * (map.getZoom() / 12);
+            circle_1.setRadius(newRadius);
+        }
+    
+        var circle_2 = circles['circle_2'];
+        if (circle_2) {
+            var newRadius = circle_2.options.baseRadius * (map.getZoom() / 12);
+            circle_2.setRadius(newRadius);
+        }
+    
+        var circle_3 = circles['circle_3'];
+        if (circle_3) {
+            var newRadius = circle_3.options.baseRadius * (map.getZoom() / 12);
+            circle_3.setRadius(newRadius);
+        }
+    
+    }
+    map.on('zoomend', updateCircleSizes);
+    updateCircleSizes();
+</script>
+
+        
+</script>
+</html>

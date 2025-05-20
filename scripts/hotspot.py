@@ -41,7 +41,7 @@ def generate_combined_hotspot_file(input_path, output_csv_path,
 
     # 비고령자 필터링 및 다발지역 계산
     df_non_senior = df[df["acdnt_age_1_code"] < 65].copy()
-    non_senior_hotspot_grid = _generate_hotspots(df_non_senior, grid_size=100, min_accidents=7)
+    non_senior_hotspot_grid = _generate_hotspots(df_non_senior, grid_size=100, min_accidents=10)
 
     # 전체 사고 데이터 GDF
     all_gdf = gpd.GeoDataFrame(

@@ -160,7 +160,7 @@ def filter_all_data():
         "near_crosswalk", "near_traffic_light", "near_child_zone",
         "near_elderly_zone", "near_disabled_zone",
         "lanes", "lengths", "velocity", "traffic_volume",
-        "elderly_hotspot","non_elderly_hotspot","all_hotspot"
+        "elderly_hotspot","non_elderly_hotspot","all_hotspot","route_nm"
     ]
     filtered_columns = [col for col in columns_to_keep if col in df.columns]
     filtered_df = df[filtered_columns]

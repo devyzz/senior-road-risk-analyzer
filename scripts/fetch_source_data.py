@@ -10,11 +10,25 @@ import xml.etree.ElementTree as ET
 
 from pyproj import Transformer
 from dotenv import load_dotenv
-from pyproj import Transformer
-from dotenv import load_dotenv
 
 import utils.GEO_UTILS as GU
 import utils.CONSTANTS as CONST
+
+# 교차로 데이터 수집 (from csv)
+def process_intersection():
+    print("==>0. 교차로 데이터 처리 시작")
+    file_path = "./data/raw/traffic_intersection.csv"
+    df = pd.read_csv(file_path)
+    
+    df = df[["INTR_NM", "XCRD", "YCRD"]]
+
+    df[["위도", "경도"]] = GU.convert_coordinates(df, "XCRD", "YCRD", "위도", "경도")
+    
+    df = df[["INTR_NM", "위도", "경도"]]
+    
+    output_path = "./data/external/intersection_data.csv"
+    df.to_csv(output_path, index=False)
+    print(f"===> 교차로 CSV 저장 완료: {output_path}")
 
 # 횡단보도 데이터 수집 (from xlsx)
 def process_crosswalk():
@@ -181,7 +195,8 @@ def merge_traffic_data() -> pd.DataFrame:
 
 if __name__ == "__main__":
     # process_crosswalk()
-    process_traffic_light()
+    process_intersection()
+    # process_traffic_light()
     # process_protection_zone()
     # process_traffic_spots()
     # merge_traffic_data()

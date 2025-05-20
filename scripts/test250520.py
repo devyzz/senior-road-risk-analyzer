@@ -17,7 +17,7 @@ speed_by_route = (
       .rename(columns={"velocity": "평균속도"})
       .sort_values("평균속도", ascending=False)
 )
-
+df.info()
 # route_nm별 평균 속도 및 고령자 핫스팟 수 계산
 hotspot_speed_by_route = (
     df.dropna(subset=["route_nm", "velocity", "elderly_hotspot"])
@@ -29,7 +29,7 @@ hotspot_speed_by_route = (
       .reset_index()
       .sort_values("고령자핫스팟건수", ascending=False)
 )
-
+hotspot_speed_by_route.info()
 
 print(hotspot_speed_by_route.head(20))  # 상위 20개 출력
 

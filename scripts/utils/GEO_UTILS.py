@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import geopandas as gpd
+from shapely.geometry import Polygon
 from pyproj import Transformer
 from scipy.spatial import KDTree
 from sklearn.cluster import DBSCAN
@@ -120,3 +122,31 @@ def assign_hotspot_columns(df_all, lat_col='lat', lon_col='lng', id_col='acdnt_n
     # 저장
     df_all.to_csv("./data/processed/accident_data_all.csv", index=False, encoding="utf-8-sig")
     print(f"====> hotspot 컬럼 포함 저장 완료")
+    
+
+# 공통 로직 함수: 사고 -> 그리드 격자 + 사고다발지역 추출
+def generate_hotspots(df_filtered, grid_size, min_accidents):
+    gdf = gpd.GeoDataFrame(
+        df_filtered,
+        geometry=gpd.points_from_xy(df_filtered["lng"], df_filtered["lat"]),
+        crs="EPSG:4326"
+    ).to_crs(epsg=5186)
+
+    minx, miny, maxx, maxy = gdf.total_bounds
+    grid_cells = [
+        Polygon([(x, y), (x + grid_size, y), (x + grid_size, y + grid_size), (x, y + grid_size)])
+        for x in np.arange(minx, maxx, grid_size)
+        for y in np.arange(miny, maxy, grid_size)
+    ]
+    grid = gpd.GeoDataFrame({'geometry': grid_cells}, crs=gdf.crs)
+
+    joined = gpd.sjoin(gdf, grid, how='left', predicate='within')
+    counts = joined.groupby("index_right").size()
+
+    hotspot_index = counts[counts >= min_accidents].index
+    hotspot_grid = grid.loc[hotspot_index].copy()
+    hotspot_grid["accident_count"] = counts[hotspot_index].values
+    hotspot_grid["center_x"] = hotspot_grid.geometry.centroid.x
+    hotspot_grid["center_y"] = hotspot_grid.geometry.centroid.y
+
+    return hotspot_grid
